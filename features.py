@@ -3,7 +3,7 @@ import streamlit as st
 from data_manager import get_data
 from fbfeature.commingFilmsList import load_films, display_films
 
-information = get_data("users", "user_accounts")
+information = get_data("KinoDev", "user_accounts")
 
 films = load_films()
 
