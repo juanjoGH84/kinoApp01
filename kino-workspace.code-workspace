@@ -1,11 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "../../../../../.streamlit"
-		},
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
 }

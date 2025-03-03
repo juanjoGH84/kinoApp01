@@ -12,7 +12,6 @@ st.markdown('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0
 # Authenticate the user
 if authenticate_user():
     # If authenticated, display the features
-
     display_key_features()
     logout()  # Show the logout button
 else:

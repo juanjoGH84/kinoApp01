@@ -37,3 +37,15 @@ def insert_data(db_name, collection_name, data):
         collection.insert_many(data)  # Insert multiple documents
     elif isinstance(data, dict):
         collection.insert_one(data)  # Insert a single document
+
+
+def update_data(db_name, collection_name, query, update):
+    """
+    Updates data in the specified collection.
+    :param db_name: Name of the database
+    :param collection_name: Name of the collection
+    :param query: Query to match documents
+    :param update: Update to apply
+    """
+    collection = connect_db(db_name, collection_name)
+    collection.update_one(query, update)

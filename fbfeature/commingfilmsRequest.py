@@ -1,19 +1,32 @@
 # commingfilmsRequest.py
 import os
+import sys
 import requests
 from dotenv import load_dotenv
-from data_manager import insert_data
+# Add the parent directory to the system path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from data_manager import get_data, insert_data
 
-# Load environment variables from .env
 load_dotenv()
+
+# Retrieve the dxToken from the database
+users = get_data("users", "user_accounts")
+dx_token = None
+
+for user in users:
+    if 'dxToken' in user:
+        dx_token = user['dxToken']
+        break
+
+if not dx_token:
+    raise ValueError("DX Token not found in the database.")
 
 # API details
 url = "https://public.dx.no/v1/partners/145/productions/comingFilms"
-auth_token = os.getenv('DX_TOKEN')
 
 # Set up the authorization header
 headers = {
-    "Authorization": f"Bearer {auth_token}"
+    "Authorization": f"Bearer {dx_token}"
 }
 
 try:
