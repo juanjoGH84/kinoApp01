@@ -49,3 +49,9 @@ def update_data(db_name, collection_name, query, update):
     """
     collection = connect_db(db_name, collection_name)
     collection.update_one(query, update)
+
+def data_access():
+ #user_db = connect_db("KinoDev", "user_accounts")
+ db_name = st.secrets["database"]["dbname"]
+ collection_name =  st.secrets["database"]["coll_usrs"]
+ return db_name, collection_name

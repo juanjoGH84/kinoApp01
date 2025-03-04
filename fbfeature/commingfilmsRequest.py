@@ -2,15 +2,16 @@
 import os
 import sys
 import requests
-from dotenv import load_dotenv
+
 # Add the parent directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from data_manager import get_data, insert_data
+from data_manager import get_data, insert_data, data_access
 
-load_dotenv()
+
+dbname, collection_name = data_access()
 
 # Retrieve the dxToken from the database
-users = get_data("users", "user_accounts")
+users = get_data( dbname, collection_name)
 dx_token = None
 
 for user in users:
