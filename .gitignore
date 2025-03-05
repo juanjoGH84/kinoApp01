@@ -130,12 +130,14 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.kinoappenv
 env/
 venv/
 kinoappenv/
 ENV/
 env.bak/
 venv.bak/
+kinoappenv.bak/
 
 # Spyder project settings
 .spyderproject
