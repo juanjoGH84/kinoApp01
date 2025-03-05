@@ -133,7 +133,6 @@ celerybeat.pid
 .kinoappenv
 env/
 venv/
-kinoappenv/
 ENV/
 env.bak/
 venv.bak/
