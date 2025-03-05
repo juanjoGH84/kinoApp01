@@ -1,14 +1,8 @@
 import streamlit as st
-from data_manager import get_data, connect_db, data_access
+from data_manager import get_data, connect_db
 
 # Initialize the database connection
-
-dbname, collection_name = data_access()
-
-
-#"KinoDev","user_accounts" dbname, collection_name
-user_db = connect_db( dbname, collection_name)
-
+user_db = connect_db("users", "user_accounts")
 
 def user_update(name):
     """Update the session state with the logged-in username."""
