@@ -164,6 +164,7 @@ dmypy.json
 cython_debug/
 
 #VS WorkSpace
+kino-workspace.code-workspace
 .code-workspace
 
 # PyCharm
