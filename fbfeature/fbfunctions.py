@@ -2,7 +2,10 @@
 import streamlit as st
 import facebook as fb
 import requests
-from data_manager import get_data
+from data_manager import get_data, userinfo
+
+#Database 
+dbname, collection_name = userinfo()
 
 def prepare_facebook_post(film):
     """Prepare the message and image URL for a Facebook post."""
@@ -23,7 +26,7 @@ def publish_to_facebook(message, image_url):
         return "No user logged in."
 
     # Retrieve user information from the database
-    users = get_data("users", "user_accounts")
+    users = get_data(dbname, collection_name)
     current_user = next((user for user in users if user.get('user') == username), None)
     
     if not current_user:

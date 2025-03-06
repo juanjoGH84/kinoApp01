@@ -2,12 +2,12 @@
 import streamlit as st
 import pandas as pd
 from bson import ObjectId
-from data_manager import get_data
+from data_manager import get_data, userinfo
 from fbfeature.commingFilmsList import load_films, display_films
 
+dbname, collection_name = userinfo() 
 
-
-information = get_data("users", "user_accounts")
+information = get_data(dbname, collection_name)
 if information:
     df_info = pd.DataFrame(information)
     if '_id' in df_info.columns:

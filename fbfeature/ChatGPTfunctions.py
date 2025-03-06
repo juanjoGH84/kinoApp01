@@ -1,12 +1,11 @@
 #fbfeature/ChatGPTfunctions.py
-
 from openai import OpenAI
 import streamlit as st
-from data_manager import get_data
+from data_manager import get_data,userinfo
 from fbfeature.fbfunctions import prepare_facebook_post
-from dotenv import load_dotenv
 
-load_dotenv()
+#Database 
+dbname, collection_name = userinfo()
 
 def generate_facebook_post(message, film):
     """Generate a Facebook post using OpenAI."""
@@ -17,7 +16,7 @@ def generate_facebook_post(message, film):
         return "No user logged in."
 
     # Retrieve user information from the database
-    users = get_data("users", "user_accounts")
+    users = get_data(dbname, collection_name)
     current_user = next((user for user in users if user.get('user') == username), None)
     
     if not current_user:
@@ -33,8 +32,9 @@ def generate_facebook_post(message, film):
     
     # Prepare the message using the prepare_facebook_post function
     message, _ = prepare_facebook_post(film)
-    print(message)
+    print(message) #Limited 80 characters
     try:
+        max_characters=80
         # Make a request to the OpenAI ChatCompletion API
         chat_completion = client.chat.completions.create(
             messages=[
@@ -46,8 +46,12 @@ def generate_facebook_post(message, film):
 
         # Extract and return the response content
         generated_text = chat_completion.choices[0].message.content
-        print(generated_text)
-        return generated_text
+        if len(generated_text) > max_characters:
+            generated_text = generated_text[:max_characters]
+            print(generated_text)    
+            return generated_text
+        #print(generated_text)
+        #return generated_text
     
         
 

@@ -49,3 +49,13 @@ def update_data(db_name, collection_name, query, update):
     """
     collection = connect_db(db_name, collection_name)
     collection.update_one(query, update)
+
+def userinfo():
+    db_name = st.secrets.get("database",{}).get("dbname",{}) 
+    collection_name =  st.secrets.get("database", {}).get("coll_usrs","NotFound")
+    return  db_name, collection_name
+
+def filmkom():
+    db_name = st.secrets.get("dbfilmkommin",{}).get("dbname","NotFound")
+    collection_name = st.secrets.get("dbfilmkommin",{}).get("coll_usrs","NotFound")
+    return db_name, collection_name 
