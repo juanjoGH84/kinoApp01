@@ -5,9 +5,13 @@ import subprocess
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from data_manager import get_data, update_data  # Import the database query function
+from data_manager import get_data, update_data, filmkom  # Import the database query function
 from fbfeature.fbfunctions import prepare_facebook_post, publish_to_facebook
 from fbfeature.ChatGPTfunctions import generate_facebook_post
+
+
+#Database 
+dbname, collection_name = filmkom()
 
 def load_films():
     """
@@ -15,7 +19,7 @@ def load_films():
     :return: Sorted list of films
     """
     # Fetch data from the MongoDB collection
-    films_data = get_data("users", "commingFilms")
+    films_data = get_data(dbname, collection_name)
 
     if not films_data:
         return []
@@ -97,10 +101,10 @@ def display_films(films):
                 st.write(f"Generated Text: {generated_text}")
                 st.markdown("---")  # Add a separator within the column
 
-                if st.button(f"Generate Facebook Post for {title}"):
+                if st.button(f"Generate Facebook Post for {title} Oppsummeringen er laget av ei KI-teneste fra OpenAI."):
                     message, _ = prepare_facebook_post(film)
                     generated_text = generate_facebook_post(message, film)
-                    update_data("users", "commingFilms", {'parent_id': film['parent_id']}, {'$set': {'generated_text': generated_text}})
+                    update_data(dbname, collection_name, {'parent_id': film['parent_id']}, {'$set': {'generated_text': generated_text}})
                     st.success("Generated text updated successfully.")
                     st.write(generated_text)
 

@@ -130,12 +130,14 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.kinoappenv
+kinoappenv/
 env/
 venv/
-kinoappenv/
 ENV/
 env.bak/
 venv.bak/
+kinoappenv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -160,6 +162,10 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+#VS WorkSpace
+kino-workspace.code-workspace
+.code-workspace
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

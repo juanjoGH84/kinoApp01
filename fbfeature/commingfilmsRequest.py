@@ -2,16 +2,16 @@
 import os
 import sys
 import requests
-
 # Add the parent directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from data_manager import get_data, insert_data, data_access
+from data_manager import get_data, insert_data, userinfo
 
+#Database 
+dbname, collection_name = userinfo()
 
-dbname, collection_name = data_access()
 
 # Retrieve the dxToken from the database
-users = get_data( dbname, collection_name)
+users = get_data(dbname, collection_name)
 dx_token = None
 
 for user in users:
