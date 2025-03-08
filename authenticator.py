@@ -1,5 +1,6 @@
 import streamlit as st
 from data_manager import get_data, connect_db, userinfo
+import time
 
 # Initialize the database connection
 
@@ -11,25 +12,24 @@ def user_update(name):
     """Update the session state with the logged-in username."""
     st.session_state.username = name
 
-
 def select_signup():
     """Switch to the sign-up form."""
     st.session_state.form = 'signup_form'
 
 def login_form():
+
         login_form = st.sidebar.form(key='login_form', clear_on_submit=True)
         username = login_form.text_input(label='Enter Username')
         user_pas = login_form.text_input(label='Enter Password', type='password')
         login = login_form.form_submit_button(label='Sign In')
-        
+
         if login:
             user = user_db.find_one({'user': username, 'pwd': user_pas})
             if user:
                 user_update(username)
-                st.sidebar.success(f"Welcome back, {username.upper()}!")
-                st.rerun()
+                Alert.userOk()
             else:
-                st.sidebar.error('Invalid username or password.')
+                Alert.userError()
 
 def signup_form():
     # Sign-Up Form
@@ -52,7 +52,7 @@ def signup_form():
             else:
                 user_db.insert_one({'user': new_username, 'email': new_user_email, 'pwd': new_user_pas})
                 user_update(new_username)
-                st.sidebar.success(f"Welcome, {new_username.upper()}!")
+                Alert.loggedIn
                 st.rerun()
         
         login_form()
@@ -70,7 +70,7 @@ def authenticate_user():
 
     # If the user is already authenticated, return True
     if st.session_state.username != '':
-        st.sidebar.success(f"You are logged in as {st.session_state.username.upper()}")
+        Alert.loggedIn()
         return True
 
     # If not authenticated, show login or sign-up forms
@@ -94,3 +94,21 @@ def logout():
     if st.sidebar.button("Log Out"):
         st.session_state.username = ''
         st.rerun()
+
+class Alert:
+    def userError():
+        st.sidebar.error('Invalid username or password.')
+        time.sleep(3)
+        st.rerun()
+
+    def userOk():
+        st.sidebar.success(f"Welcome back, {st.session_state.username.capitalize()} !") #
+        time.sleep(3)
+        st.rerun()
+    
+    def loggedIn():
+        placeholder  = st.sidebar.empty()
+        placeholder.success(f"You are logged in as {st.session_state.username.capitalize()}")
+        time.sleep(3)
+        placeholder.text(f"You are logged in as {st.session_state.username.capitalize()}")
+        
